@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>{{ patient["first_name"] }} {{ patient["last_name"] }} | Hospital Management System</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+      
+
+</head>
+
+<body>
+
+<aside class="sidebar">
+<div class="logo">
+
+    <div class="logo-icon">
+        +
+    </div>
+
+    <div>
+        <h2>Hospital</h2>
+        <span>Management System</span>
+    </div>
+
+</div>
+
+<nav>
+
+    <a href="/dashboard" class="menu">
+        <span><i class="fa-solid fa-chart-pie"></i></span>
+        <span>Dashboard</span>
+    </a>
+
+    <a href="/patients-page" class="menu active">
+        <span><i class="fa-solid fa-user-group"></i></span>
+        <span>Patients</span>
+    </a>
+
+    <a href="/appointments-page" class="menu">
+        <span><i class="fa-solid fa-calendar-check"></i></span>
+        <span>Appointments</span>
+    </a>
+
+    <div class="menu">
+        <span><i class="fa-solid fa-bed"></i></span>
+        <span>Admissions</span>
+    </div>
+
+    <div class="menu">
+        <span><i class="fa-solid fa-file-medical"></i></span>
+        <span>Medical Records</span>
+    </div>
+
+    <div class="menu">
+        <span><i class="fa-solid fa-flask"></i></span>
+        <span>Laboratory</span>
+    </div>
+
+    <div class="menu">
+        <span><i class="fa-solid fa-x-ray"></i></span>
+        <span>Scans & Imaging</span>
+    </div>
+
+    <div class="menu">
+        <span><i class="fa-solid fa-pills"></i></span>
+        <span>Pharmacy</span>
+    </div>
+
+    <div class="menu">
+        <span><i class="fa-solid fa-file-invoice-dollar"></i></span>
+        <span>Billing & Payments</span>
+    </div>
+
+    <div class="menu">
+        <span><i class="fa-solid fa-hand-holding-heart"></i></span>
+        <span>Welfare</span>
+    </div>
+
+    <div class="menu">
+        <span><i class="fa-solid fa-chart-line"></i></span>
+        <span>Reports & Analytics</span>
+    </div>
+
+    <div class="menu">
+        <span><i class="fa-solid fa-bell"></i></span>
+        <span>Notifications</span>
+    </div>
+
+</nav>
+
+</aside>
+
+<main class="main">
+
+<header class="topbar">
+
+    <div>
+
+        <div class="back-link">
+
+            <a href="/patients-page">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Patients
+            </a>
+
+        </div>
+
+        <h1>Patient Profile</h1>
+
+        <p>
+            Complete patient information and medical history
+        </p>
+
+    </div>
+
+
+    <div class="admin">
+
+        <div class="admin-avatar">
+            A
+        </div>
+
+        <div>
+            <strong>Administrator</strong>
+            <small>System Admin</small>
+        </div>
+
+    </div>
+
+</header>
+
+
+<section class="profile-header">
+
+    <div class="profile-main">
+
+        <div class="profile-details">
+
+            <div class="profile-title-row">
+                <h2>
+                    {{ patient["first_name"] }}
+                    {{ patient["last_name"] }}
+                </h2>
+
+                <span class="hero-code">
+                    {{ patient["patient_code"] }}
+                </span>
+            </div>
+
+            <p class="profile-registration">
+                Registered on {{ patient["registration_date"] }}
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="profile-meta">
+
+        <div class="profile-meta-item">
+            <span>Patient ID</span>
+            <strong>{{ patient["patient_id"] }}</strong>
+        </div>
+
+        <div class="profile-meta-divider"></div>
+
+        <div class="profile-meta-item">
+            <span>Date of Birth</span>
+            <strong>{{ patient["date_of_birth"] }}</strong>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="detail-grid">
+
+
+    <div class="detail-card">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-user"></i>
+
+            <h3>Personal Information</h3>
+
+        </div>
+
+        <div class="info-grid">
+
+            <div>
+                <span>First Name</span>
+                <strong>{{ patient["first_name"] }}</strong>
+            </div>
+
+            <div>
+                <span>Last Name</span>
+                <strong>{{ patient["last_name"] }}</strong>
+            </div>
+
+            <div>
+                <span>Date of Birth</span>
+                <strong>{{ patient["date_of_birth"] }}</strong>
+            </div>
+
+            <div>
+                <span>Phone</span>
+                <strong>{{ patient["phone"] or "—" }}</strong>
+            </div>
+
+            <div>
+                <span>Email</span>
+                <strong>{{ patient["email"] or "—" }}</strong>
+            </div>
+
+            <div>
+                <span>Address</span>
+                <strong>{{ patient["address"] or "—" }}</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="detail-card">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-id-card"></i>
+
+            <h3>Demographics</h3>
+
+        </div>
+
+        {% if demographics %}
+
+        <div class="info-grid">
+
+            <div>
+                <span>Gender</span>
+                <strong>{{ demographics["gender"] or "—" }}</strong>
+            </div>
+
+            <div>
+                <span>Blood Group</span>
+                <strong>{{ demographics["blood_group"] or "—" }}</strong>
+            </div>
+
+            <div>
+                <span>Nationality</span>
+                <strong>{{ demographics["nationality"] or "—" }}</strong>
+            </div>
+
+            <div>
+                <span>Marital Status</span>
+                <strong>{{ demographics["marital_status"] or "—" }}</strong>
+            </div>
+
+            <div>
+                <span>Occupation</span>
+                <strong>{{ demographics["occupation"] or "—" }}</strong>
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="no-data">
+            No demographic information available.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-card">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-phone"></i>
+
+            <h3>Emergency Contact</h3>
+
+        </div>
+
+        <div class="info-grid">
+
+            <div>
+                <span>Contact Name</span>
+                <strong>
+                    {{ patient["emergency_contact_name"] or "—" }}
+                </strong>
+            </div>
+
+            <div>
+                <span>Contact Phone</span>
+                <strong>
+                    {{ patient["emergency_contact_phone"] or "—" }}
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="detail-card">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-heart-pulse"></i>
+
+            <h3>Current Status</h3>
+
+        </div>
+
+        <div class="profile-status-grid">
+
+            <div class="status-summary">
+
+                <span class="summary-icon">
+                    <i class="fa-solid fa-calendar-check"></i>
+                </span>
+
+                <div>
+                    <small>Appointments</small>
+                    <strong>{{ appointments|length }}</strong>
+                </div>
+
+            </div>
+
+            <div class="status-summary">
+
+                <span class="summary-icon">
+                    <i class="fa-solid fa-bed"></i>
+                </span>
+
+                <div>
+                    <small>Admissions</small>
+                    <strong>{{ admissions|length }}</strong>
+                </div>
+
+            </div>
+
+            <div class="status-summary">
+
+                <span class="summary-icon">
+                    <i class="fa-solid fa-flask"></i>
+                </span>
+
+                <div>
+                    <small>Lab Tests</small>
+                    <strong>{{ lab_tests|length }}</strong>
+                </div>
+
+            </div>
+
+            <div class="status-summary">
+
+                <span class="summary-icon">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                </span>
+
+                <div>
+                    <small>Bills</small>
+                    <strong>{{ bills|length }}</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="detail-card full-width">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-notes-medical"></i>
+
+            <h3>Medical History</h3>
+
+        </div>
+
+        {% if medical_history %}
+
+        <div class="records">
+
+            {% for record in medical_history %}
+
+            <div class="record">
+
+                <div class="record-icon">
+
+                    <i class="fa-solid fa-stethoscope"></i>
+
+                </div>
+
+                <div class="record-content">
+
+                    <div class="record-top">
+
+                        <strong>
+                            {{ record["condition_name"] }}
+                        </strong>
+
+                        <span>
+                            {{ record["status"] or "Recorded" }}
+                        </span>
+
+                    </div>
+
+                    <p>
+                        <strong>Diagnosis:</strong>
+                        {{ record["diagnosis_date"] or "—" }}
+                    </p>
+
+                    <p>
+                        <strong>Treatment:</strong>
+                        {{ record["treatment"] or "—" }}
+                    </p>
+
+                    {% if record["notes"] %}
+                    <p>
+                        <strong>Notes:</strong>
+                        {{ record["notes"] }}
+                    </p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="no-data">
+            No medical history available.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-card full-width">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-triangle-exclamation"></i>
+
+            <h3>Allergies</h3>
+
+        </div>
+
+        {% if allergies %}
+
+        <div class="allergy-grid">
+
+            {% for allergy in allergies %}
+
+            <div class="allergy">
+
+                <div class="allergy-icon">
+
+                    <i class="fa-solid fa-ban"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ allergy["allergen"] }}
+                    </strong>
+
+                    <p>
+                        Reaction:
+                        {{ allergy["reaction"] or "—" }}
+                    </p>
+
+                    <span>
+                        Severity:
+                        {{ allergy["severity"] or "Not specified" }}
+                    </span>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="no-data">
+            No allergies recorded.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-card full-width">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-calendar-check"></i>
+
+            <h3>Appointments</h3>
+
+        </div>
+
+        {% if appointments %}
+
+        <div class="record-list">
+
+            {% for appointment in appointments %}
+
+            <div class="list-row">
+
+                <div>
+
+                    <strong>
+                        {{ appointment["appointment_date"] }}
+                    </strong>
+
+                    <p>
+                        {{ appointment["appointment_time"] }}
+                    </p>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Dr.
+                        {{ appointment["doctor_first_name"] }}
+                        {{ appointment["doctor_last_name"] }}
+                    </strong>
+
+                    <p>
+                        {{ appointment["specialization"] }}
+                    </p>
+
+                </div>
+
+                <div>
+
+                    <span class="status">
+                        {{ appointment["status"] }}
+                    </span>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="no-data">
+            No appointments available.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-card full-width">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-bed"></i>
+
+            <h3>Admissions</h3>
+
+        </div>
+
+        {% if admissions %}
+
+        <div class="record-list">
+
+            {% for admission in admissions %}
+
+            <div class="list-row">
+
+                <div>
+
+                    <strong>
+                        {{ admission["admission_date"] }}
+                    </strong>
+
+                    <p>
+                        {{ admission["admission_reason"] }}
+                    </p>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Dr.
+                        {{ admission["doctor_first_name"] }}
+                        {{ admission["doctor_last_name"] }}
+                    </strong>
+
+                    <p>
+
+                        {{ admission["ward_name"] or "—" }}
+
+                        {% if admission["room_number"] %}
+                        · Room {{ admission["room_number"] }}
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+                <div>
+
+                    <span class="status">
+                        {{ admission["status"] }}
+                    </span>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="no-data">
+            No admissions available.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-card full-width">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-file-medical"></i>
+
+            <h3>Medical Records</h3>
+
+        </div>
+
+        {% if medical_records %}
+
+        <div class="record-list">
+
+            {% for record in medical_records %}
+
+            <div class="list-row">
+
+                <div>
+
+                    <strong>
+                        {{ record["record_date"] }}
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ record["diagnosis"] }}
+                    </strong>
+
+                    <p>
+                        {{ record["treatment"] or record["notes"] or "—" }}
+                    </p>
+
+                </div>
+
+                <div>
+
+                    {% if record["doctor_first_name"] %}
+
+                    <span>
+                        Dr.
+                        {{ record["doctor_first_name"] }}
+                        {{ record["doctor_last_name"] }}
+                    </span>
+
+                    {% else %}
+
+                    <span>
+                        — 
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="no-data">
+            No medical records available.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-card">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-heart-pulse"></i>
+
+            <h3>Vital Signs</h3>
+
+        </div>
+
+        {% if vital_signs %}
+
+        {% for vital in vital_signs[:5] %}
+
+        <div class="small-record">
+
+            <strong>
+                {{ vital["recorded_date"] }}
+            </strong>
+
+            <p>
+                Blood Pressure:
+                {{ vital["systolic_bp"] or "—" }}
+                /
+                {{ vital["diastolic_bp"] or "—" }}
+            </p>
+
+            <p>
+                Temperature:
+                {{ vital["temperature"] or "—" }}
+            </p>
+
+            <p>
+                Heart Rate:
+                {{ vital["heart_rate"] or "—" }}
+            </p>
+
+            <p>
+                Oxygen:
+                {{ vital["oxygen_saturation"] or "—" }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <div class="no-data">
+            No vital signs recorded.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-card">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-flask"></i>
+
+            <h3>Laboratory Tests</h3>
+
+        </div>
+
+        {% if lab_tests %}
+
+        {% for test in lab_tests[:5] %}
+
+        <div class="small-record">
+
+            <strong>
+                {{ test["test_name"] }}
+            </strong>
+
+            <p>
+                Date: {{ test["test_date"] }}
+            </p>
+
+            <p>
+                Result: {{ test["result"] or "Pending" }}
+            </p>
+
+            {% if test["status"] %}
+            <span class="status">
+                {{ test["status"] }}
+            </span>
+            {% endif %}
+
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <div class="no-data">
+            No laboratory tests available.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-card">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-x-ray"></i>
+
+            <h3>Scans & Imaging</h3>
+
+        </div>
+
+        {% if scans %}
+
+        {% for scan in scans[:5] %}
+
+        <div class="small-record">
+
+            <strong>
+                {{ scan["scan_type"] }}
+            </strong>
+
+            <p>
+                {{ scan["scan_date"] }}
+            </p>
+
+            <p>
+                Body Part:
+                {{ scan["body_part"] or "—" }}
+            </p>
+
+            <p>
+                {{ scan["impression"] or scan["findings"] or "—" }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <div class="no-data">
+            No scans available.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-card">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-pills"></i>
+
+            <h3>Prescriptions</h3>
+
+        </div>
+
+        {% if prescriptions %}
+
+        {% for prescription in prescriptions[:5] %}
+
+        <div class="small-record">
+
+            <strong>
+                {{ prescription["prescription_date"] }}
+            </strong>
+
+            <p>
+                Dr.
+                {{ prescription["doctor_first_name"] }}
+                {{ prescription["doctor_last_name"] }}
+            </p>
+
+            {% if prescription["instructions"] %}
+            <p>
+                {{ prescription["instructions"] }}
+            </p>
+            {% endif %}
+
+            <span class="status">
+                {{ prescription["status"] }}
+            </span>
+
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <div class="no-data">
+            No prescriptions available.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-card">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-receipt"></i>
+
+            <h3>Billing</h3>
+
+        </div>
+
+        {% if bills %}
+
+        {% for bill in bills[:5] %}
+
+        <div class="small-record">
+
+            <strong>
+                Bill #{{ bill["bill_id"] }}
+            </strong>
+
+            <p>
+                Date: {{ bill["bill_date"] }}
+            </p>
+
+            <p>
+                Discount:
+                {{ bill["discount"] }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <div class="no-data">
+            No bills available.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-card">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-money-bill-wave"></i>
+
+            <h3>Payments</h3>
+
+        </div>
+
+        {% if payments %}
+
+        {% for payment in payments[:5] %}
+
+        <div class="small-record">
+
+            <strong>
+                {{ payment["payment_date"] }}
+            </strong>
+
+            <p>
+                Amount:
+                {{ payment["amount"] }}
+            </p>
+
+            <p>
+                Method:
+                {{ payment["payment_method"] }}
+            </p>
+
+            <span class="status">
+                {{ payment["status"] }}
+            </span>
+
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <div class="no-data">
+            No payments available.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-card">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-hand-holding-heart"></i>
+
+            <h3>Welfare Assistance</h3>
+
+        </div>
+
+        {% if welfare_assistance %}
+
+        {% for welfare in welfare_assistance[:5] %}
+
+        <div class="small-record">
+
+            <strong>
+                {{ welfare["assistance_type"] or "Assistance" }}
+            </strong>
+
+            <p>
+                Date:
+                {{ welfare["assistance_date"] }}
+            </p>
+
+            <p>
+                Amount:
+                {{ welfare["amount"] }}
+            </p>
+
+            <p>
+                {{ welfare["reason"] or "—" }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <div class="no-data">
+            No welfare assistance recorded.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-card">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-clock-rotate-left"></i>
+
+            <h3>Follow-Ups</h3>
+
+        </div>
+
+        {% if follow_ups %}
+
+        {% for follow_up in follow_ups[:5] %}
+
+        <div class="small-record">
+
+            <strong>
+                {{ follow_up["follow_up_date"] }}
+            </strong>
+
+            <p>
+                Dr.
+                {{ follow_up["doctor_first_name"] }}
+                {{ follow_up["doctor_last_name"] }}
+            </p>
+
+            <p>
+                {{ follow_up["reason"] or "Follow-up visit" }}
+            </p>
+
+            <span class="status">
+                {{ follow_up["status"] }}
+            </span>
+
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <div class="no-data">
+            No follow-ups available.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-card">
+
+        <div class="detail-title">
+
+            <i class="fa-solid fa-bell"></i>
+
+            <h3>Notifications</h3>
+
+        </div>
+
+        {% if notifications %}
+
+        {% for notification in notifications[:5] %}
+
+        <div class="small-record">
+
+            <strong>
+                {{ notification["title"] }}
+            </strong>
+
+            <p>
+                {{ notification["message"] }}
+            </p>
+
+            <span class="status">
+                {% if notification["is_read"] %}
+                Read
+                {% else %}
+                Unread
+                {% endif %}
+            </span>
+
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <div class="no-data">
+            No notifications available.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+</section>
+
+</main>
+
+</body>
+
+</html>
