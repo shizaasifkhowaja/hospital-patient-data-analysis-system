@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Patients | Hospital Management System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                +
+            </div>
+
+            <div>
+                <h2>Hospital</h2>
+                <span>Management System</span>
+            </div>
+
+        </div>
+
+
+        <nav>
+
+           <a href="/dashboard" class="menu">
+    <i class="fa-solid fa-chart-pie"></i>
+    <span>Dashboard</span>
+</a>
+
+<a href="/patients-page" class="menu active">
+    <i class="fa-solid fa-user-group"></i>
+    <span>Patients</span>
+</a>
+
+<a href="/appointments-page" class="menu">
+    <i class="fa-solid fa-calendar-check"></i>
+    <span>Appointments</span>
+</a>
+
+            <div class="menu">
+                <span><i class="fa-solid fa-bed"></i></span>
+                <span>Admissions</span>
+            </div>
+
+
+            <div class="menu">
+                <span><i class="fa-solid fa-file-medical"></i></span>
+                <span>Medical Records</span>
+            </div>
+
+
+            <div class="menu">
+                <span><i class="fa-solid fa-flask"></i></span>
+                <span>Laboratory</span>
+            </div>
+
+
+            <div class="menu">
+                <span><i class="fa-solid fa-x-ray"></i></span>
+                <span>Scans & Imaging</span>
+            </div>
+
+
+            <div class="menu">
+                <span><i class="fa-solid fa-pills"></i></span>
+                <span>Pharmacy</span>
+            </div>
+
+
+            <div class="menu">
+                <span><i class="fa-solid fa-file-invoice-dollar"></i></span>
+                <span>Billing & Payments</span>
+            </div>
+
+
+            <div class="menu">
+                <span><i class="fa-solid fa-hand-holding-heart"></i></span>
+                <span>Welfare</span>
+            </div>
+
+
+            <div class="menu">
+                <span><i class="fa-solid fa-chart-line"></i></span>
+                <span>Reports & Analytics</span>
+            </div>
+
+
+            <div class="menu">
+                <span><i class="fa-solid fa-bell"></i></span>
+                <span>Notifications</span>
+            </div>
+
+        </nav>
+
+    </aside>
+
+    <main class="main">
+
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Patients</h1>
+
+                <p>
+                    Manage and view registered hospital patients
+                </p>
+
+            </div>
+
+
+            <div class="admin">
+
+                <div class="admin-avatar">
+                    A
+                </div>
+
+                <div>
+
+                    <strong>Administrator</strong>
+
+                    <small>System Admin</small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <section class="page-card">
+
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>Patient Directory</h2>
+
+                    <p>
+                        {{ patients|length }} registered patients
+                    </p>
+
+                </div>
+
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="patientSearch"
+                        placeholder="Search patients..."
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Patient Code</th>
+
+                            <th>Patient Name</th>
+
+                            <th>Date of Birth</th>
+
+                            <th>Phone</th>
+
+                            <th>Email</th>
+
+                            <th>Registration Date</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="patientTable">
+
+                        {% for patient in patients %}
+
+                        <tr>
+
+                            <td>
+
+                                <span class="patient-code">
+                                    {{ patient["patient_code"] }}
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="patient-name">
+
+                                    <div class="patient-avatar">
+                                        {{ patient["first_name"][0] }}
+                                    </div>
+
+                                    <strong>
+                                        {{ patient["first_name"] }}
+                                        {{ patient["last_name"] }}
+                                    </strong>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                {{ patient["date_of_birth"] }}
+                            </td>
+
+
+                            <td>
+                                {{ patient["phone"] or "—" }}
+                            </td>
+
+
+                            <td>
+                                {{ patient["email"] or "—" }}
+                            </td>
+
+
+                            <td>
+                                {{ patient["registration_date"] }}
+                            </td>
+
+
+                            <td>
+
+                                <a
+                                    href="/patient/{{ patient['patient_id'] }}"
+                                    class="view-button"
+                                >
+
+                                    View
+
+                                    <i class="fa-solid fa-arrow-right"></i>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% else %}
+
+                        <tr>
+
+                            <td colspan="7" class="empty">
+
+                                <i class="fa-solid fa-user-slash"></i>
+
+                                <p>No patients found.</p>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <script>
+
+        const searchInput =
+            document.getElementById("patientSearch");
+
+        const tableRows =
+            document.querySelectorAll("#patientTable tr");
+
+
+        searchInput.addEventListener("input", function () {
+
+            const search =
+                this.value.toLowerCase().trim();
+
+
+            tableRows.forEach(function (row) {
+
+                const text =
+                    row.innerText.toLowerCase();
+
+
+                if (text.includes(search)) {
+
+                    row.style.display = "";
+
+                } else {
+
+                    row.style.display = "none";
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>
+
